@@ -1,0 +1,24 @@
+﻿namespace cwiczenia2.Devices;
+
+public class Camera : Device
+{
+    public bool Has4KResolution { get; set; }
+    public int HoursOnBattery { get; set; }
+
+    public Camera(
+        string name,
+        string availabilityStatus,
+        int ageInYears,
+        int priceInUsd,
+        bool has4KResolution,
+        int hoursOnBattery
+    ) : base(
+        name,
+        availabilityStatus,
+        ageInYears,
+        priceInUsd
+    ) {
+        Has4KResolution = has4KResolution;
+        HoursOnBattery = hoursOnBattery;
+    }
+}
