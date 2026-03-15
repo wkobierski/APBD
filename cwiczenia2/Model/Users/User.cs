@@ -1,11 +1,5 @@
 ﻿namespace cwiczenia2.Model.Users;
 
-public enum UserType
-{
-    Student,
-    Employee,
-}
-
 public class User
 {
     private static int _id = 0;
