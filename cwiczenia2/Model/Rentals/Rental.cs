@@ -1,4 +1,4 @@
-﻿namespace cwiczenia2;
+﻿namespace cwiczenia2.Model.Rentals;
 
 public class Rental
 {

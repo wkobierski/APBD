@@ -1,2 +1,1 @@
-﻿Console.WriteLine("test12");
-
+﻿Console.WriteLine("Welcome to the Rental Application");

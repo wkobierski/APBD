@@ -1,4 +1,4 @@
-﻿namespace cwiczenia2.Devices;
+﻿namespace cwiczenia2.Model.Devices;
 
 public abstract class Device
 {

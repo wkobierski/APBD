@@ -1,4 +1,4 @@
-﻿namespace cwiczenia2.Users;
+﻿namespace cwiczenia2.Model.Users;
 
 public enum UserType
 {
