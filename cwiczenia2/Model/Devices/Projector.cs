@@ -7,7 +7,7 @@ public class Projector : Device
 
     public Projector(
         string name,
-        string availabilityStatus,
+        AvailabilityStatus availabilityStatus,
         int ageInYears,
         int priceInUsd,
         int brightnessLevel,

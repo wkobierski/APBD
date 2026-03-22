@@ -7,7 +7,7 @@ public class Camera : Device
 
     public Camera(
         string name,
-        string availabilityStatus,
+        AvailabilityStatus availabilityStatus,
         int ageInYears,
         int priceInUsd,
         bool has4KResolution,

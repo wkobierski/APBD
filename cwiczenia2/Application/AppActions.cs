@@ -1,4 +1,5 @@
 using cwiczenia2.Logic;
+using cwiczenia2.Model.Devices;
 using cwiczenia2.Model.Users;
 
 namespace cwiczenia2.Application;
@@ -40,8 +41,11 @@ public static class AppActions
         Console.WriteLine("\nEnter device name:");
         var name = Utils.ToTitleCase(Console.ReadLine()!);
 
-        Console.WriteLine("Enter availability status:");
-        var status = Utils.ToTitleCase(Console.ReadLine()!);
+        Console.WriteLine("Choose availability status:");
+        var statuses = Enum.GetValues<AvailabilityStatus>();
+        for (var i = 0; i < statuses.Length; i++)
+            Console.WriteLine($"{i + 1}. {statuses[i]}");
+        var status = statuses[Utils.ReadInt(1, statuses.Length) - 1];
 
         Console.WriteLine("Enter age in years:");
         var age = Utils.ReadInt();

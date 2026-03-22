@@ -7,7 +7,7 @@ public class Laptop : Device
 
     public Laptop(
         string name, 
-        string availabilityStatus, 
+        AvailabilityStatus availabilityStatus,
         int ageInYears, 
         int priceInUsd, 
         int screenDiagonalInInches, 
