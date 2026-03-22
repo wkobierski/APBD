@@ -55,7 +55,10 @@ public class App
                     case 8:
                         AppActions.ShowActiveRentalsForUser();
                         break;
-                    // TODO: handle actions 9-10
+                    case 9:
+                        AppActions.ShowExpiredRentals();
+                        break;
+                    // TODO: handle action 10
                 }
 
                 ShowAvailableActions();

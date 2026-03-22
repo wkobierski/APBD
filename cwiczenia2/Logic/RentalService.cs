@@ -22,6 +22,13 @@ public static class RentalService
         return Rental.Rentals.Where(r => r.UserId == userId && r.ReturnedInTime == null).ToList();
     }
 
+    public static List<Rental> GetExpiredRentals()
+    {
+        return Rental.Rentals
+            .Where(r => r.ReturnedInTime == null && (DateTime.Today - r.RentalDate).Days > Constants.RentalFreePeriodDays)
+            .ToList();
+    }
+
     public static int ReturnDevice(int rentalId)
     {
         var rental = Rental.Rentals.First(r => r.Id == rentalId);

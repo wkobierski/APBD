@@ -263,4 +263,21 @@ public static class AppActions
             Console.WriteLine($"  {rental}");
         Console.WriteLine();
     }
+
+    public static void ShowExpiredRentals()
+    {
+        Console.WriteLine("\n--- Expired Rentals ---\n");
+
+        var rentals = RentalService.GetExpiredRentals();
+
+        if (rentals.Count == 0)
+        {
+            Console.WriteLine("No expired rentals.\n");
+            return;
+        }
+
+        foreach (var rental in rentals)
+            Console.WriteLine($"  {rental}");
+        Console.WriteLine();
+    }
 }
