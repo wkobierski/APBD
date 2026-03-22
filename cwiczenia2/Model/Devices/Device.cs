@@ -3,13 +3,13 @@
 public abstract class Device
 {
     private static int _id = 0;
-    private static List<Device> _devices = new List<Device>();
+    private static readonly List<Device> _devices = [];
     public static IReadOnlyList<Device> Devices => _devices;
-    public int Id { get; set; }
-    public string Name { get; set; }
+    public int Id { get; init; }
+    public string Name { get; }
     public AvailabilityStatus AvailabilityStatus { get; set; }
-    public int AgeInYearsInYears { get; set; }
-    public int PriceInUsdInUsd { get; set; }
+    public int AgeInYearsInYears { get; }
+    public int PriceInUsdInUsd { get; }
     public string? Note { get; set; }
 
     protected Device(

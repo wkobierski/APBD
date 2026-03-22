@@ -1,5 +1,4 @@
 using cwiczenia2.Model.Devices;
-
 namespace cwiczenia2.Logic;
 
 public static class DeviceService

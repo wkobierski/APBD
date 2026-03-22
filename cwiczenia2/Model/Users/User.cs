@@ -3,12 +3,12 @@
 public class User
 {
     private static int _id = 0;
-    private static List<User> _users = new List<User>();
+    private static readonly List<User> _users = [];
     public static IReadOnlyList<User> Users => _users;
-    public int Id { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public UserType UserType { get; set; }
+    public int Id { get; init; }
+    public string FirstName { get; }
+    public string LastName { get; }
+    public UserType UserType { get; }
     public int TotalLateFees { get; set; }
 
     public User(

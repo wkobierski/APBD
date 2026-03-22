@@ -2,8 +2,8 @@
 
 public class Camera : Device
 {
-    public bool Has4KResolution { get; set; }
-    public int HoursOnBattery { get; set; }
+    public bool Has4KResolution { get; }
+    public int HoursOnBattery { get; }
 
     public Camera(
         string name,

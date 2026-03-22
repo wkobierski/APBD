@@ -1,7 +1,6 @@
 using cwiczenia2.Model.Devices;
 using cwiczenia2.Model.Rentals;
 using cwiczenia2.Model.Users;
-
 namespace cwiczenia2.Logic;
 
 public static class RentalService

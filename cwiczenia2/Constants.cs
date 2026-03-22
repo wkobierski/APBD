@@ -21,4 +21,5 @@ public static class Constants
     public const int MaxStudentActiveRentals = 2;
     public const int MaxEmployeeActiveRentals = 5;
     public const string DataFilePath = "data.json";
+    public const string CancelKeyword = "cancel";
 }

@@ -2,8 +2,8 @@
 
 public class Projector : Device
 {
-    public int BrightnessLevel { get; set; }
-    public int OptimalDistanceToScreen { get; set; }
+    public int BrightnessLevel { get; }
+    public int OptimalDistanceToScreen { get; }
 
     public Projector(
         string name,

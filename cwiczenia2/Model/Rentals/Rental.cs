@@ -3,13 +3,13 @@
 public class Rental
 {
     private static int _id = 0;
-    private static List<Rental> _rentals = new List<Rental>();
+    private static readonly List<Rental> _rentals = [];
     public static IReadOnlyList<Rental> Rentals => _rentals;
-    public int Id { get; set; }
-    public int UserId { get; set; }
-    public int DeviceId { get; set; }
-    public DateTime RentalDate { get; set; }
-    public int RentalLenghtInDays { get; set; }
+    public int Id { get; init; }
+    public int UserId { get; }
+    public int DeviceId { get; }
+    public DateTime RentalDate { get; }
+    public int RentalLenghtInDays { get; }
     public bool? ReturnedInTime { get; set; }
 
     public Rental(

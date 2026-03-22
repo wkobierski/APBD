@@ -1,5 +1,4 @@
-﻿using cwiczenia2.Logic;
-
+﻿using cwiczenia2.Data;
 namespace cwiczenia2.Application;
 
 public class App
@@ -17,61 +16,49 @@ public class App
         {
             GetUserAction();
 
-            if (SelectedAction == 0)
+            switch (SelectedAction)
             {
-                Console.WriteLine("\nAre you sure? y/n");
-                var confirm = Console.ReadLine();
-                if (confirm is "y" or "Y")
-                {
-                    isRunning = false;
-                }
-                else
-                {
-                    ShowAvailableActions();
-                }
+                case 0:
+                    if (Utils.ConfirmAction())
+                        isRunning = false;
+                    break;
+                case 1:
+                    AppActions.AddUser();
+                    break;
+                case 2:
+                    AppActions.AddDevice();
+                    break;
+                case 3:
+                    AppActions.ShowAllDevices();
+                    break;
+                case 4:
+                    AppActions.ShowAvailableDevices();
+                    break;
+                case 5:
+                    AppActions.RentDevice();
+                    break;
+                case 6:
+                    AppActions.ReturnDevice();
+                    break;
+                case 7:
+                    AppActions.MarkDeviceUnavailable();
+                    break;
+                case 8:
+                    AppActions.ShowActiveRentalsForUser();
+                    break;
+                case 9:
+                    AppActions.ShowExpiredRentals();
+                    break;
+                case 10:
+                    AppActions.GenerateReport();
+                    break;
             }
-            else
-            {
-                switch (SelectedAction)
-                {
-                    case 1:
-                        AppActions.AddUser();
-                        break;
-                    case 2:
-                        AppActions.AddDevice();
-                        break;
-                    case 3:
-                        AppActions.ShowAllDevices();
-                        break;
-                    case 4:
-                        AppActions.ShowAvailableDevices();
-                        break;
-                    case 5:
-                        AppActions.RentDevice();
-                        break;
-                    case 6:
-                        AppActions.ReturnDevice();
-                        break;
-                    case 7:
-                        AppActions.MarkDeviceUnavailable();
-                        break;
-                    case 8:
-                        AppActions.ShowActiveRentalsForUser();
-                        break;
-                    case 9:
-                        AppActions.ShowExpiredRentals();
-                        break;
-                    case 10:
-                        AppActions.GenerateReport();
-                        break;
-                }
 
+            if (isRunning)
                 ShowAvailableActions();
-            }
         }
         
-        DataStore.SaveData();
-        Console.WriteLine("\nThanks for using the Rental App. Goodbye!\n");
+        SayGoodbye();
     }
 
     private static void GreetUser()
@@ -79,6 +66,12 @@ public class App
         Console.WriteLine("\nWelcome to the Rental App!\n");
         Console.WriteLine("Choose your action by inserting it's number:");
         ShowAvailableActions();
+    }
+    
+    private static void SayGoodbye()
+    {
+        DataStore.SaveData();
+        Console.WriteLine("\nThanks for using the Rental App. Goodbye!\n");
     }
 
     private static void ShowAvailableActions()

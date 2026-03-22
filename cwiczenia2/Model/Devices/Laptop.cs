@@ -2,8 +2,8 @@
 
 public class Laptop : Device
 {
-    public int ScreenDiagonalInInches { get; set; }
-    public int WeightInGrams { get; set; }
+    public int ScreenDiagonalInInches { get; }
+    public int WeightInGrams { get; }
 
     public Laptop(
         string name, 
