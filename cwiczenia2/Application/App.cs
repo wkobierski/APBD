@@ -52,7 +52,10 @@ public class App
                     case 7:
                         AppActions.MarkDeviceUnavailable();
                         break;
-                    // TODO: handle actions 8-10
+                    case 8:
+                        AppActions.ShowActiveRentalsForUser();
+                        break;
+                    // TODO: handle actions 9-10
                 }
 
                 ShowAvailableActions();

@@ -230,4 +230,37 @@ public static class AppActions
         DeviceService.MarkUnavailable(device.Id, string.IsNullOrEmpty(note) ? null : note);
         Console.WriteLine($"\nDevice '{device.Name}' marked as unavailable.\n");
     }
+
+    public static void ShowActiveRentalsForUser()
+    {
+        Console.WriteLine("\n--- Active Rentals for User ---\n");
+
+        var users = UserService.GetUsers();
+        if (users.Count == 0)
+        {
+            Console.WriteLine("No users in the system.\n");
+            return;
+        }
+
+        Console.WriteLine("Select a user:");
+        for (var i = 0; i < users.Count; i++)
+            Console.WriteLine($"  {i + 1}. {users[i]}");
+        Console.WriteLine();
+
+        var choice = Utils.ReadInt(1, users.Count);
+        var user = users[choice - 1];
+
+        var rentals = RentalService.GetActiveRentalsForUser(user.Id);
+
+        if (rentals.Count == 0)
+        {
+            Console.WriteLine($"\nNo active rentals for {user.FirstName} {user.LastName}.\n");
+            return;
+        }
+
+        Console.WriteLine($"\nActive rentals for {user.FirstName} {user.LastName}:\n");
+        foreach (var rental in rentals)
+            Console.WriteLine($"  {rental}");
+        Console.WriteLine();
+    }
 }
