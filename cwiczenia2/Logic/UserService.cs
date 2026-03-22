@@ -13,4 +13,10 @@ public static class UserService
     {
         return User.Users;
     }
+
+    public static void ClearFees(int userId)
+    {
+        var user = User.Users.First(u => u.Id == userId);
+        user.TotalLateFees = 0;
+    }
 }

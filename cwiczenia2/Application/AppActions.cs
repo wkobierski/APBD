@@ -169,8 +169,15 @@ public static class AppActions
         Console.WriteLine("Enter rental length in days:");
         var rentalLength = Utils.ReadInt(min: 1);
 
-        RentalService.CreateRental(selectedUser.Id, selectedDevice.Id, rentalDate, rentalLength);
-        Console.WriteLine($"\nDevice '{selectedDevice.Name}' rented to {selectedUser.FirstName} {selectedUser.LastName} for {rentalLength} days.\n");
+        try
+        {
+            RentalService.CreateRental(selectedUser.Id, selectedDevice.Id, rentalDate, rentalLength);
+            Console.WriteLine($"\nDevice '{selectedDevice.Name}' rented to {selectedUser.FirstName} {selectedUser.LastName} for {rentalLength} days.\n");
+        }
+        catch (InvalidOperationException e)
+        {
+            Console.WriteLine($"\nError: {e.Message}\n");
+        }
     }
 
     public static void ReturnDevice()
@@ -197,9 +204,24 @@ public static class AppActions
 
         Console.WriteLine($"\nDevice returned successfully!");
         if (fee > 0)
+        {
             Console.WriteLine($"Late return fee: {fee} PLN");
+            Console.WriteLine("Did the user pay the fee? y/n");
+            var paid = Console.ReadLine();
+            if (paid is "y" or "Y")
+            {
+                UserService.ClearFees(rental.UserId);
+                Console.WriteLine("Fee paid. Balance cleared.");
+            }
+            else
+            {
+                Console.WriteLine("Fee outstanding. Balance remains on user account.");
+            }
+        }
         else
+        {
             Console.WriteLine("Returned on time. No fee.");
+        }
         Console.WriteLine();
     }
 

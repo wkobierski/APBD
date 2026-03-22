@@ -9,6 +9,7 @@ public class User
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public UserType UserType { get; set; }
+    public int TotalLateFees { get; set; }
 
     public User(
         string firstName,
@@ -24,6 +25,9 @@ public class User
 
     public override string ToString()
     {
-        return $"[{Id}] {FirstName} {LastName} | Type: {UserType}";
+        var result = $"[{Id}] {FirstName} {LastName} | Type: {UserType}";
+        if (TotalLateFees > 0)
+            result += $" | Late fees: {TotalLateFees} PLN";
+        return result;
     }
 }
