@@ -280,4 +280,53 @@ public static class AppActions
             Console.WriteLine($"  {rental}");
         Console.WriteLine();
     }
+
+    public static void GenerateReport()
+    {
+        Console.WriteLine("\n========== RENTAL SHOP SUMMARY REPORT ==========\n");
+
+        var users = UserService.GetUsers();
+        Console.WriteLine($"Total users: {users.Count}");
+
+        var devices = DeviceService.GetDevices();
+        Console.WriteLine($"Total devices: {devices.Count}");
+
+        Console.WriteLine("\n  Devices by status:");
+        foreach (var group in devices.GroupBy(d => d.AvailabilityStatus))
+            Console.WriteLine($"    {group.Key}: {group.Count()}");
+
+        Console.WriteLine("\n  Devices by type:");
+        foreach (var group in devices.GroupBy(d => d.GetType().Name))
+            Console.WriteLine($"    {group.Key}: {group.Count()}");
+
+        var allRentals = RentalService.GetAllRentals();
+        var activeRentals = RentalService.GetActiveRentals();
+        var expiredRentals = RentalService.GetExpiredRentals();
+
+        Console.WriteLine($"\nTotal rentals: {allRentals.Count}");
+        Console.WriteLine($"Active rentals: {activeRentals.Count}");
+        Console.WriteLine($"Expired (overdue) rentals: {expiredRentals.Count}");
+
+        var totalFees = RentalService.GetTotalLateFees();
+        Console.WriteLine($"\nTotal late fees accumulated: {totalFees} PLN");
+
+        if (allRentals.Count > 0)
+        {
+            var mostRentedDeviceId = allRentals
+                .GroupBy(r => r.DeviceId)
+                .OrderByDescending(g => g.Count())
+                .First().Key;
+            var mostRentedDevice = devices.First(d => d.Id == mostRentedDeviceId);
+            Console.WriteLine($"Most rented device: {mostRentedDevice.Name} ({allRentals.Count(r => r.DeviceId == mostRentedDeviceId)} rentals)");
+
+            var topUserId = allRentals
+                .GroupBy(r => r.UserId)
+                .OrderByDescending(g => g.Count())
+                .First().Key;
+            var topUser = users.First(u => u.Id == topUserId);
+            Console.WriteLine($"User with most rentals: {topUser.FirstName} {topUser.LastName} ({allRentals.Count(r => r.UserId == topUserId)} rentals)");
+        }
+
+        Console.WriteLine("\n=================================================\n");
+    }
 }

@@ -29,6 +29,23 @@ public static class RentalService
             .ToList();
     }
 
+    public static IReadOnlyList<Rental> GetAllRentals()
+    {
+        return Rental.Rentals;
+    }
+
+    public static int GetTotalLateFees()
+    {
+        return Rental.Rentals
+            .Where(r => r.ReturnedInTime != null)
+            .Sum(r =>
+            {
+                var totalDays = (DateTime.Today - r.RentalDate).Days;
+                var lateDays = Math.Max(0, totalDays - Constants.RentalFreePeriodDays);
+                return lateDays * Constants.LateFeePerDayPln;
+            });
+    }
+
     public static int ReturnDevice(int rentalId)
     {
         var rental = Rental.Rentals.First(r => r.Id == rentalId);
