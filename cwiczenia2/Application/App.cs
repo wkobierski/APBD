@@ -2,33 +2,73 @@
 
 public class App
 {
-    public int SelectedAction { get; set; }
+    private int SelectedAction { get; set; }
 
     public void Run()
     {
+        var isRunning = true;
+        
         GreetUser();
-        GetUserSelection();
+        
+        while (isRunning)
+        {
+            GetUserAction();
+
+            if (SelectedAction == 0)
+            {
+                Console.WriteLine("\nAre you sure? y/n");
+                var confirm = Console.ReadLine();
+                if (confirm is "y" or "Y")
+                {
+                    isRunning = false;
+                }
+                else
+                {
+                    ShowAvailableActions();
+                }
+            }
+            else
+            {
+                // TODO: handle actions 1-10
+            }
+        }
+        
+        Console.WriteLine("\nThanks for using the Rental App. Goodbye!\n");
     }
 
-    private void GreetUser()
+    private static void GreetUser()
     {
-        Console.WriteLine("Welcome to the Rental App!");
-        Console.WriteLine("Choose your action by inserting it's number: ");
-        // TODO create a map/dict where key is action number and value is the description
-        Console.WriteLine("1. Add a user to the system");
-        Console.WriteLine("2. Add a device of a given type");
-        Console.WriteLine("3. Show a list of all devices with their statuses");
-        Console.WriteLine("4. Show devices available to rent");
-        Console.WriteLine("5. Rent a device to a user");
-        Console.WriteLine("6. Return a device and calculate late return fee");
-        Console.WriteLine("7. Mark device non-available");
-        Console.WriteLine("8. Show all active rentals for user");
-        Console.WriteLine("9. Show all expired rentals");
-        Console.WriteLine("10. Generate a summary report");
+        Console.WriteLine("\nWelcome to the Rental App!\n");
+        Console.WriteLine("Choose your action by inserting it's number:");
+        ShowAvailableActions();
     }
 
-    private void GetUserSelection()
+    private static void ShowAvailableActions()
     {
-        SelectedAction = Console.Read();
+        Console.WriteLine();
+        for (var i = 0; i < Constants.AppActions.Length; i++)
+            Console.WriteLine($"{i + 1}. {Constants.AppActions[i]}");
+        Console.WriteLine("0. Exit Rental App\n");
+    }
+
+    private void GetUserAction()
+    {
+        var actionChosen = false;
+        
+        while (!actionChosen)
+        {
+            var input = Console.ReadLine();
+
+            if (int.TryParse(input, out var action) && action >= 0 && action <= Constants.AppActions.Length)
+            {
+                SelectedAction = action;
+                actionChosen = true;
+            }
+            else
+            {
+                Console.WriteLine("\nInput incorrect, try again:\n");
+                ShowAvailableActions();
+            }
+        }
     }
 }

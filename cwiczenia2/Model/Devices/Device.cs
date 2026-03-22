@@ -3,6 +3,8 @@
 public abstract class Device
 {
     private static int _id = 0;
+    private static List<Device> _devices = new List<Device>();
+    public static IReadOnlyList<Device> Devices => _devices;
     public int Id { get; set; }
     public string Name { get; set; }
     public string AvailabilityStatus { get; set; }
@@ -20,5 +22,6 @@ public abstract class Device
         AvailabilityStatus = availabilityStatus;
         AgeInYearsInYears = ageInYears;
         PriceInUsdInUsd = priceInUsd;
+        _devices.Add(this);
     }
 }
