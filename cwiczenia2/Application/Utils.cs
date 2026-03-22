@@ -47,7 +47,30 @@ public static class Utils
     public static bool ConfirmAction()
     {
         Console.WriteLine("\nAre you sure? y/n");
-        var input = Console.ReadLine();
-        return input is "y" or "Y";
+        var input = Console.ReadLine()?.Trim().ToLower();
+        return input is "y";
+    }
+
+    public static void DisplayEnumOptions<T>() where T : struct, Enum
+    {
+        var values = Enum.GetValues<T>();
+        for (var i = 0; i < values.Length; i++)
+            Console.WriteLine($"{i + 1}. {values[i]}");
+    }
+
+    public static void DisplayList<T>(string title, IList<T> items, string emptyMessage)
+    {
+        Console.WriteLine($"\n--- {title} ---\n");
+
+        if (items.Count == 0)
+        {
+            Console.WriteLine($"{emptyMessage}\n");
+            return;
+        }
+
+        foreach (var item in items)
+            Console.WriteLine(item);
+
+        Console.WriteLine();
     }
 }

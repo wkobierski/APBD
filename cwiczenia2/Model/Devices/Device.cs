@@ -8,8 +8,8 @@ public abstract class Device
     public int Id { get; init; }
     public string Name { get; }
     public AvailabilityStatus AvailabilityStatus { get; set; }
-    public int AgeInYearsInYears { get; }
-    public int PriceInUsdInUsd { get; }
+    public int AgeInYears { get; }
+    public int PriceInUsd { get; }
     public string? Note { get; set; }
 
     protected Device(
@@ -21,8 +21,8 @@ public abstract class Device
         Id = ++_id;
         Name = name;
         AvailabilityStatus = availabilityStatus;
-        AgeInYearsInYears = ageInYears;
-        PriceInUsdInUsd = priceInUsd;
+        AgeInYears = ageInYears;
+        PriceInUsd = priceInUsd;
         _devices.Add(this);
     }
 
@@ -39,7 +39,7 @@ public abstract class Device
 
     public override string ToString()
     {
-        var result = $"[{Id}] {Name} | Status: {AvailabilityStatus} | Age: {AgeInYearsInYears}y | Price: ${PriceInUsdInUsd}";
+        var result = $"[{Id}] {Name} | Status: {AvailabilityStatus} | Age: {AgeInYears}y | Price: ${PriceInUsd}";
         if (!string.IsNullOrEmpty(Note))
             result += $" | Note: {Note}";
         return result;

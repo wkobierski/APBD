@@ -22,4 +22,5 @@ public static class Constants
     public const int MaxEmployeeActiveRentals = 5;
     public const string DataFilePath = "data.json";
     public const string CancelKeyword = "cancel";
+    public static readonly string[] DeviceTypes = ["Camera", "Laptop", "Projector"];
 }

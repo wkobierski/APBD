@@ -10,6 +10,13 @@ public static class AppActions
         Console.WriteLine($"(Type '{Constants.CancelKeyword}' at any point to cancel)\n");
     }
 
+    private static bool Cancelled(object? value)
+    {
+        if (value != null) return false;
+        Console.WriteLine("Cancelled.\n");
+        return true;
+    }
+
     public static void AddUser()
     {
         Console.WriteLine("\n--- Add a User ---\n");
@@ -17,22 +24,20 @@ public static class AppActions
 
         Console.WriteLine("Enter first name:");
         var firstNameInput = Utils.ReadCancellableString();
-        if (firstNameInput == null) { Console.WriteLine("Cancelled.\n"); return; }
+        if (Cancelled(firstNameInput)) return;
         var firstName = Utils.ToTitleCase(firstNameInput);
 
         Console.WriteLine("Enter last name:");
         var lastNameInput = Utils.ReadCancellableString();
-        if (lastNameInput == null) { Console.WriteLine("Cancelled.\n"); return; }
+        if (Cancelled(lastNameInput)) return;
         var lastName = Utils.ToTitleCase(lastNameInput);
 
         Console.WriteLine("\nChoose user type:");
-        var userTypes = Enum.GetValues<UserType>();
-        for (var i = 0; i < userTypes.Length; i++)
-            Console.WriteLine($"{i + 1}. {userTypes[i]}");
+        Utils.DisplayEnumOptions<UserType>();
 
-        var typeChoice = Utils.ReadCancellableInt(1, userTypes.Length);
-        if (typeChoice == null) { Console.WriteLine("Cancelled.\n"); return; }
-        var selectedType = userTypes[typeChoice.Value - 1];
+        var typeChoice = Utils.ReadCancellableInt(1, Enum.GetValues<UserType>().Length);
+        if (Cancelled(typeChoice)) return;
+        var selectedType = Enum.GetValues<UserType>()[typeChoice.Value - 1];
 
         UserService.AddUser(firstName, lastName, selectedType);
         Console.WriteLine($"\nUser {firstName} {lastName} ({selectedType}) added successfully!\n");
@@ -44,103 +49,74 @@ public static class AppActions
         PrintCancelHint();
 
         Console.WriteLine("Choose device type:");
-        string[] deviceTypes = ["Camera", "Laptop", "Projector"];
-        for (var i = 0; i < deviceTypes.Length; i++)
-            Console.WriteLine($"{i + 1}. {deviceTypes[i]}");
+        for (var i = 0; i < Constants.DeviceTypes.Length; i++)
+            Console.WriteLine($"{i + 1}. {Constants.DeviceTypes[i]}");
 
-        var selectedType = Utils.ReadCancellableInt(1, deviceTypes.Length);
-        if (selectedType == null) { Console.WriteLine("Cancelled.\n"); return; }
+        var selectedType = Utils.ReadCancellableInt(1, Constants.DeviceTypes.Length);
+        if (Cancelled(selectedType)) return;
 
         Console.WriteLine("\nEnter device name:");
         var nameInput = Utils.ReadCancellableString();
-        if (nameInput == null) { Console.WriteLine("Cancelled.\n"); return; }
+        if (Cancelled(nameInput)) return;
         var name = Utils.ToTitleCase(nameInput);
 
         Console.WriteLine("Choose availability status:");
-        var statuses = Enum.GetValues<AvailabilityStatus>();
-        for (var i = 0; i < statuses.Length; i++)
-            Console.WriteLine($"{i + 1}. {statuses[i]}");
-        var statusChoice = Utils.ReadCancellableInt(1, statuses.Length);
-        if (statusChoice == null) { Console.WriteLine("Cancelled.\n"); return; }
-        var status = statuses[statusChoice.Value - 1];
+        Utils.DisplayEnumOptions<AvailabilityStatus>();
+        var statusChoice = Utils.ReadCancellableInt(1, Enum.GetValues<AvailabilityStatus>().Length);
+        if (Cancelled(statusChoice)) return;
+        var status = Enum.GetValues<AvailabilityStatus>()[statusChoice.Value - 1];
 
         Console.WriteLine("Enter age in years:");
         var age = Utils.ReadCancellableInt();
-        if (age == null) { Console.WriteLine("Cancelled.\n"); return; }
+        if (Cancelled(age)) return;
 
         Console.WriteLine("Enter price in USD:");
         var price = Utils.ReadCancellableInt();
-        if (price == null) { Console.WriteLine("Cancelled.\n"); return; }
+        if (Cancelled(price)) return;
 
         switch (selectedType.Value)
         {
             case 1:
                 Console.WriteLine("Has 4K resolution? (y/n):");
                 var has4KInput = Utils.ReadCancellableString();
-                if (has4KInput == null) { Console.WriteLine("Cancelled.\n"); return; }
+                if (Cancelled(has4KInput)) return;
                 var has4K = has4KInput.ToLower() is "y";
                 Console.WriteLine("Hours on battery:");
                 var hours = Utils.ReadCancellableInt();
-                if (hours == null) { Console.WriteLine("Cancelled.\n"); return; }
+                if (Cancelled(hours)) return;
                 DeviceService.AddCamera(name, status, age.Value, price.Value, has4K, hours.Value);
                 break;
             case 2:
                 Console.WriteLine("Screen diagonal in inches:");
                 var screen = Utils.ReadCancellableInt();
-                if (screen == null) { Console.WriteLine("Cancelled.\n"); return; }
+                if (Cancelled(screen)) return;
                 Console.WriteLine("Weight in grams:");
                 var weight = Utils.ReadCancellableInt();
-                if (weight == null) { Console.WriteLine("Cancelled.\n"); return; }
+                if (Cancelled(weight)) return;
                 DeviceService.AddLaptop(name, status, age.Value, price.Value, screen.Value, weight.Value);
                 break;
             case 3:
                 Console.WriteLine("Brightness level:");
                 var brightness = Utils.ReadCancellableInt();
-                if (brightness == null) { Console.WriteLine("Cancelled.\n"); return; }
+                if (Cancelled(brightness)) return;
                 Console.WriteLine("Optimal distance to screen (m):");
                 var distance = Utils.ReadCancellableInt();
-                if (distance == null) { Console.WriteLine("Cancelled.\n"); return; }
+                if (Cancelled(distance)) return;
                 DeviceService.AddProjector(name, status, age.Value, price.Value, brightness.Value, distance.Value);
                 break;
         }
 
-        Console.WriteLine($"\n{deviceTypes[selectedType.Value - 1]} '{name}' added successfully!\n");
+        Console.WriteLine($"\n{Constants.DeviceTypes[selectedType.Value - 1]} '{name}' added successfully!\n");
     }
 
     public static void ShowAllDevices()
     {
-        Console.WriteLine("\n--- All Devices ---\n");
-
-        var devices = DeviceService.GetDevices();
-
-        if (devices.Count == 0)
-        {
-            Console.WriteLine("No devices found.\n");
-            return;
-        }
-
-        foreach (var device in devices)
-            Console.WriteLine(device);
-
-        Console.WriteLine();
+        Utils.DisplayList("All Devices", DeviceService.GetDevices(), "No devices found.");
     }
 
     public static void ShowAvailableDevices()
     {
-        Console.WriteLine("\n--- Available Devices ---\n");
-
-        var devices = DeviceService.GetAvailableDevices();
-
-        if (devices.Count == 0)
-        {
-            Console.WriteLine("No available devices found.\n");
-            return;
-        }
-
-        foreach (var device in devices)
-            Console.WriteLine(device);
-
-        Console.WriteLine();
+        Utils.DisplayList("Available Devices", DeviceService.GetAvailableDevices(), "No available devices found.");
     }
 
     public static void RentDevice()
@@ -155,7 +131,7 @@ public static class AppActions
         Console.WriteLine("  0. Add new user\n");
 
         var userChoice = Utils.ReadCancellableInt(0, users.Count);
-        if (userChoice == null) { Console.WriteLine("Cancelled.\n"); return; }
+        if (Cancelled(userChoice)) return;
         if (userChoice == 0)
         {
             AddUser();
@@ -179,7 +155,7 @@ public static class AppActions
         Console.WriteLine("  0. Add new device\n");
 
         var deviceChoice = Utils.ReadCancellableInt(0, devices.Count);
-        if (deviceChoice == null) { Console.WriteLine("Cancelled.\n"); return; }
+        if (Cancelled(deviceChoice)) return;
         if (deviceChoice == 0)
         {
             AddDevice();
@@ -189,18 +165,18 @@ public static class AppActions
                 Console.WriteLine($"  {i + 1}. {devices[i]}");
             Console.WriteLine();
             deviceChoice = Utils.ReadCancellableInt(1, devices.Count);
-            if (deviceChoice == null) { Console.WriteLine("Cancelled.\n"); return; }
+            if (Cancelled(deviceChoice)) return;
         }
         var selectedDevice = devices[deviceChoice.Value - 1];
 
         Console.WriteLine("\nEnter rental date (yyyy-MM-dd) or press Enter for today:");
         var dateInput = Utils.ReadCancellableString();
-        if (dateInput == null) { Console.WriteLine("Cancelled.\n"); return; }
+        if (Cancelled(dateInput)) return;
         var rentalDate = string.IsNullOrEmpty(dateInput) ? DateTime.Today : DateTime.Parse(dateInput);
 
         Console.WriteLine("Enter rental length in days:");
         var rentalLength = Utils.ReadCancellableInt(min: 1);
-        if (rentalLength == null) { Console.WriteLine("Cancelled.\n"); return; }
+        if (Cancelled(rentalLength)) return;
 
         try
         {
@@ -232,7 +208,7 @@ public static class AppActions
         Console.WriteLine();
 
         var choice = Utils.ReadCancellableInt(1, activeRentals.Count);
-        if (choice == null) { Console.WriteLine("Cancelled.\n"); return; }
+        if (Cancelled(choice)) return;
         var rental = activeRentals[choice.Value - 1];
 
         var fee = RentalService.ReturnDevice(rental.Id);
@@ -242,8 +218,8 @@ public static class AppActions
         {
             Console.WriteLine($"Late return fee: {fee} PLN");
             Console.WriteLine("Did the user pay the fee? y/n");
-            var paid = Console.ReadLine();
-            if (paid is "y" or "Y")
+            var paid = Console.ReadLine()?.Trim().ToLower();
+            if (paid is "y")
             {
                 UserService.ClearFees(rental.UserId);
                 Console.WriteLine("Fee paid. Balance cleared.");
@@ -280,12 +256,12 @@ public static class AppActions
         Console.WriteLine();
 
         var choice = Utils.ReadCancellableInt(1, devices.Count);
-        if (choice == null) { Console.WriteLine("Cancelled.\n"); return; }
+        if (Cancelled(choice)) return;
         var device = devices[choice.Value - 1];
 
         Console.WriteLine($"Enter a note (or press Enter to skip, '{Constants.CancelKeyword}' to cancel):");
         var note = Utils.ReadCancellableString();
-        if (note == null) { Console.WriteLine("Cancelled.\n"); return; }
+        if (Cancelled(note)) return;
 
         DeviceService.MarkUnavailable(device.Id, string.IsNullOrEmpty(note) ? null : note);
         Console.WriteLine($"\nDevice '{device.Name}' marked as unavailable.\n");

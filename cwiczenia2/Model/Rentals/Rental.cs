@@ -9,7 +9,7 @@ public class Rental
     public int UserId { get; }
     public int DeviceId { get; }
     public DateTime RentalDate { get; }
-    public int RentalLenghtInDays { get; }
+    public int RentalLengthInDays { get; }
     public bool? ReturnedInTime { get; set; }
 
     public Rental(
@@ -23,7 +23,7 @@ public class Rental
         UserId = userId;
         DeviceId = deviceId;
         RentalDate = rentalDate;
-        RentalLenghtInDays = rentalLenghtInDays;
+        RentalLengthInDays = rentalLenghtInDays;
         ReturnedInTime = returnedInTime;
         _rentals.Add(this);
     }
@@ -41,6 +41,6 @@ public class Rental
 
     public override string ToString()
     {
-        return $"[{Id}] User: {UserId} | Device: {DeviceId} | Date: {RentalDate:yyyy-MM-dd} | Days: {RentalLenghtInDays} | Returned in time: {ReturnedInTime?.ToString() ?? "N/A"}";
+        return $"[{Id}] User: {UserId} | Device: {DeviceId} | Date: {RentalDate:yyyy-MM-dd} | Days: {RentalLengthInDays} | Returned in time: {ReturnedInTime?.ToString() ?? "N/A"}";
     }
 }
