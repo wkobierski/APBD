@@ -23,6 +23,17 @@ public class User
         _users.Add(this);
     }
 
+    public static void Reset()
+    {
+        _users.Clear();
+        _id = 0;
+    }
+
+    public static void SetIdCounter(int value)
+    {
+        _id = value;
+    }
+
     public override string ToString()
     {
         var result = $"[{Id}] {FirstName} {LastName} | Type: {UserType}";

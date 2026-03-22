@@ -28,6 +28,17 @@ public class Rental
         _rentals.Add(this);
     }
 
+    public static void Reset()
+    {
+        _rentals.Clear();
+        _id = 0;
+    }
+
+    public static void SetIdCounter(int value)
+    {
+        _id = value;
+    }
+
     public override string ToString()
     {
         return $"[{Id}] User: {UserId} | Device: {DeviceId} | Date: {RentalDate:yyyy-MM-dd} | Days: {RentalLenghtInDays} | Returned in time: {ReturnedInTime?.ToString() ?? "N/A"}";

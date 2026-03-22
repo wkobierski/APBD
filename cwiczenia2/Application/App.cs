@@ -1,4 +1,6 @@
-﻿namespace cwiczenia2.Application;
+﻿using cwiczenia2.Logic;
+
+namespace cwiczenia2.Application;
 
 public class App
 {
@@ -6,8 +8,9 @@ public class App
 
     public void Run()
     {
+        DataStore.LoadData();
         var isRunning = true;
-        
+
         GreetUser();
         
         while (isRunning)
@@ -67,6 +70,7 @@ public class App
             }
         }
         
+        DataStore.SaveData();
         Console.WriteLine("\nThanks for using the Rental App. Goodbye!\n");
     }
 

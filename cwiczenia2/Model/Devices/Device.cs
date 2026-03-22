@@ -26,6 +26,17 @@ public abstract class Device
         _devices.Add(this);
     }
 
+    public static void Reset()
+    {
+        _devices.Clear();
+        _id = 0;
+    }
+
+    public static void SetIdCounter(int value)
+    {
+        _id = value;
+    }
+
     public override string ToString()
     {
         var result = $"[{Id}] {Name} | Status: {AvailabilityStatus} | Age: {AgeInYearsInYears}y | Price: ${PriceInUsdInUsd}";
