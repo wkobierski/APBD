@@ -10,6 +10,7 @@ public abstract class Device
     public AvailabilityStatus AvailabilityStatus { get; set; }
     public int AgeInYearsInYears { get; set; }
     public int PriceInUsdInUsd { get; set; }
+    public string? Note { get; set; }
 
     protected Device(
         string name, 
@@ -27,6 +28,9 @@ public abstract class Device
 
     public override string ToString()
     {
-        return $"[{Id}] {Name} | Status: {AvailabilityStatus} | Age: {AgeInYearsInYears}y | Price: ${PriceInUsdInUsd}";
+        var result = $"[{Id}] {Name} | Status: {AvailabilityStatus} | Age: {AgeInYearsInYears}y | Price: ${PriceInUsdInUsd}";
+        if (!string.IsNullOrEmpty(Note))
+            result += $" | Note: {Note}";
+        return result;
     }
 }

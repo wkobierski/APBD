@@ -49,7 +49,10 @@ public class App
                     case 6:
                         AppActions.ReturnDevice();
                         break;
-                    // TODO: handle actions 7-10
+                    case 7:
+                        AppActions.MarkDeviceUnavailable();
+                        break;
+                    // TODO: handle actions 8-10
                 }
 
                 ShowAvailableActions();

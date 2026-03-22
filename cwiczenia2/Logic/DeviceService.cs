@@ -28,4 +28,11 @@ public static class DeviceService
     {
         return Device.Devices.Where(d => d.AvailabilityStatus == AvailabilityStatus.Available).ToList();
     }
+
+    public static void MarkUnavailable(int deviceId, string? note)
+    {
+        var device = Device.Devices.First(d => d.Id == deviceId);
+        device.AvailabilityStatus = AvailabilityStatus.Unavailable;
+        device.Note = note;
+    }
 }

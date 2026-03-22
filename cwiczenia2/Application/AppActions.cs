@@ -202,4 +202,32 @@ public static class AppActions
             Console.WriteLine("Returned on time. No fee.");
         Console.WriteLine();
     }
+
+    public static void MarkDeviceUnavailable()
+    {
+        Console.WriteLine("\n--- Mark Device Unavailable ---\n");
+
+        var devices = DeviceService.GetDevices()
+            .Where(d => d.AvailabilityStatus != AvailabilityStatus.Unavailable).ToList();
+
+        if (devices.Count == 0)
+        {
+            Console.WriteLine("No devices to mark as unavailable.\n");
+            return;
+        }
+
+        Console.WriteLine("Select a device:");
+        for (var i = 0; i < devices.Count; i++)
+            Console.WriteLine($"  {i + 1}. {devices[i]}");
+        Console.WriteLine();
+
+        var choice = Utils.ReadInt(1, devices.Count);
+        var device = devices[choice - 1];
+
+        Console.WriteLine("Enter a note (or press Enter to skip):");
+        var note = Console.ReadLine()!.Trim();
+
+        DeviceService.MarkUnavailable(device.Id, string.IsNullOrEmpty(note) ? null : note);
+        Console.WriteLine($"\nDevice '{device.Name}' marked as unavailable.\n");
+    }
 }
