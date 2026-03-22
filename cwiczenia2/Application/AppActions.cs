@@ -172,4 +172,34 @@ public static class AppActions
         RentalService.CreateRental(selectedUser.Id, selectedDevice.Id, rentalDate, rentalLength);
         Console.WriteLine($"\nDevice '{selectedDevice.Name}' rented to {selectedUser.FirstName} {selectedUser.LastName} for {rentalLength} days.\n");
     }
+
+    public static void ReturnDevice()
+    {
+        Console.WriteLine("\n--- Return a Device ---\n");
+
+        var activeRentals = RentalService.GetActiveRentals();
+
+        if (activeRentals.Count == 0)
+        {
+            Console.WriteLine("No active rentals found.\n");
+            return;
+        }
+
+        Console.WriteLine("Select a rental to return:");
+        for (var i = 0; i < activeRentals.Count; i++)
+            Console.WriteLine($"  {i + 1}. {activeRentals[i]}");
+        Console.WriteLine();
+
+        var choice = Utils.ReadInt(1, activeRentals.Count);
+        var rental = activeRentals[choice - 1];
+
+        var fee = RentalService.ReturnDevice(rental.Id);
+
+        Console.WriteLine($"\nDevice returned successfully!");
+        if (fee > 0)
+            Console.WriteLine($"Late return fee: {fee} PLN");
+        else
+            Console.WriteLine("Returned on time. No fee.");
+        Console.WriteLine();
+    }
 }

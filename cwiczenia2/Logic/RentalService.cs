@@ -11,4 +11,24 @@ public static class RentalService
         device.AvailabilityStatus = AvailabilityStatus.Rented;
         new Rental(userId, deviceId, rentalDate, rentalLengthInDays, null);
     }
+
+    public static List<Rental> GetActiveRentals()
+    {
+        return Rental.Rentals.Where(r => r.ReturnedInTime == null).ToList();
+    }
+
+    public static int ReturnDevice(int rentalId)
+    {
+        var rental = Rental.Rentals.First(r => r.Id == rentalId);
+        var device = Device.Devices.First(d => d.Id == rental.DeviceId);
+
+        var totalDays = (DateTime.Today - rental.RentalDate).Days;
+        var lateDays = Math.Max(0, totalDays - Constants.RentalFreePeriodDays);
+        var fee = lateDays * Constants.LateFeePerDayPln;
+
+        rental.ReturnedInTime = lateDays == 0;
+        device.AvailabilityStatus = AvailabilityStatus.Available;
+
+        return fee;
+    }
 }
