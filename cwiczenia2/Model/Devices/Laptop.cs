@@ -21,4 +21,9 @@ public class Laptop : Device
         ScreenDiagonalInInches = screenDiagonalInInches;
         WeightInGrams = weightInGrams;
     }
+
+    public override string ToString()
+    {
+        return $"{base.ToString()} | Screen: {ScreenDiagonalInInches}\" | Weight: {WeightInGrams}g";
+    }
 }

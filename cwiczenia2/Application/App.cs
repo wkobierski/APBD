@@ -29,7 +29,18 @@ public class App
             }
             else
             {
-                // TODO: handle actions 1-10
+                switch (SelectedAction)
+                {
+                    case 1:
+                        AppActions.AddUser();
+                        break;
+                    case 2:
+                        AppActions.AddDevice();
+                        break;
+                    // TODO: handle actions 3-10
+                }
+
+                ShowAvailableActions();
             }
         }
         
@@ -53,22 +64,6 @@ public class App
 
     private void GetUserAction()
     {
-        var actionChosen = false;
-        
-        while (!actionChosen)
-        {
-            var input = Console.ReadLine();
-
-            if (int.TryParse(input, out var action) && action >= 0 && action <= Constants.AppActions.Length)
-            {
-                SelectedAction = action;
-                actionChosen = true;
-            }
-            else
-            {
-                Console.WriteLine("\nInput incorrect, try again:\n");
-                ShowAvailableActions();
-            }
-        }
+        SelectedAction = Utils.ReadInt(0, Constants.AppActions.Length);
     }
 }

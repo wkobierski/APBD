@@ -6,19 +6,24 @@ public class User
     private static List<User> _users = new List<User>();
     public static IReadOnlyList<User> Users => _users;
     public int Id { get; set; }
-    public string Name { get; set; }
+    public string FirstName { get; set; }
     public string LastName { get; set; }
     public UserType UserType { get; set; }
 
     public User(
-        string name,
+        string firstName,
         string lastName,
         UserType userType
     ) {
         Id = ++_id;
-        Name = name;
+        FirstName = firstName;
         LastName = lastName;
         UserType = userType;
         _users.Add(this);
+    }
+
+    public override string ToString()
+    {
+        return $"[{Id}] {FirstName} {LastName} | Type: {UserType}";
     }
 }

@@ -24,4 +24,9 @@ public abstract class Device
         PriceInUsdInUsd = priceInUsd;
         _devices.Add(this);
     }
+
+    public override string ToString()
+    {
+        return $"[{Id}] {Name} | Status: {AvailabilityStatus} | Age: {AgeInYearsInYears}y | Price: ${PriceInUsdInUsd}";
+    }
 }

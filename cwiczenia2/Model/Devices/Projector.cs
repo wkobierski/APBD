@@ -21,4 +21,9 @@ public class Projector : Device
         BrightnessLevel = brightnessLevel;
         OptimalDistanceToScreen = optimalDistanceToScreen;
     }
+
+    public override string ToString()
+    {
+        return $"{base.ToString()} | Brightness: {BrightnessLevel} | Distance: {OptimalDistanceToScreen}m";
+    }
 }

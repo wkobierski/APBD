@@ -21,4 +21,9 @@ public class Camera : Device
         Has4KResolution = has4KResolution;
         HoursOnBattery = hoursOnBattery;
     }
+
+    public override string ToString()
+    {
+        return $"{base.ToString()} | 4K: {Has4KResolution} | Battery: {HoursOnBattery}h";
+    }
 }
