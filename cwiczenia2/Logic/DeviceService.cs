@@ -23,4 +23,9 @@ public static class DeviceService
     {
         return Device.Devices;
     }
+
+    public static List<Device> GetAvailableDevices()
+    {
+        return Device.Devices.Where(d => d.AvailabilityStatus == AvailabilityStatus.Available).ToList();
+    }
 }

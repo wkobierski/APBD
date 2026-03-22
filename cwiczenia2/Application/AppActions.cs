@@ -98,4 +98,22 @@ public static class AppActions
 
         Console.WriteLine();
     }
+
+    public static void ShowAvailableDevices()
+    {
+        Console.WriteLine("\n--- Available Devices ---\n");
+
+        var devices = DeviceService.GetAvailableDevices();
+
+        if (devices.Count == 0)
+        {
+            Console.WriteLine("No available devices found.\n");
+            return;
+        }
+
+        foreach (var device in devices)
+            Console.WriteLine(device);
+
+        Console.WriteLine();
+    }
 }
