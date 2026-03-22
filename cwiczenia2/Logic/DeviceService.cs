@@ -18,4 +18,9 @@ public static class DeviceService
     {
         new Projector(name, status, age, price, brightness, distance);
     }
+
+    public static IReadOnlyList<Device> GetDevices()
+    {
+        return Device.Devices;
+    }
 }

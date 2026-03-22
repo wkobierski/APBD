@@ -77,4 +77,21 @@ public static class AppActions
         Console.WriteLine($"\n{deviceTypes[selectedType - 1]} '{name}' added successfully!\n");
     }
 
+    public static void ShowAllDevices()
+    {
+        Console.WriteLine("\n--- All Devices ---\n");
+
+        var devices = DeviceService.GetDevices();
+
+        if (devices.Count == 0)
+        {
+            Console.WriteLine("No devices found.\n");
+            return;
+        }
+
+        foreach (var device in devices)
+            Console.WriteLine(device);
+
+        Console.WriteLine();
+    }
 }
