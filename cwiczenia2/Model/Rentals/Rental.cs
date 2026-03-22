@@ -3,6 +3,8 @@
 public class Rental
 {
     private static int _id = 0;
+    private static List<Rental> _rentals = new List<Rental>();
+    public static IReadOnlyList<Rental> Rentals => _rentals;
     public int Id { get; set; }
     public int UserId { get; set; }
     public int DeviceId { get; set; }
@@ -23,5 +25,11 @@ public class Rental
         RentalDate = rentalDate;
         RentalLenghtInDays = rentalLenghtInDays;
         ReturnedInTime = returnedInTime;
+        _rentals.Add(this);
+    }
+
+    public override string ToString()
+    {
+        return $"[{Id}] User: {UserId} | Device: {DeviceId} | Date: {RentalDate:yyyy-MM-dd} | Days: {RentalLenghtInDays} | Returned in time: {ReturnedInTime?.ToString() ?? "N/A"}";
     }
 }

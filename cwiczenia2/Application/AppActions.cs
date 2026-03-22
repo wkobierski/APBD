@@ -116,4 +116,60 @@ public static class AppActions
 
         Console.WriteLine();
     }
+
+    public static void RentDevice()
+    {
+        Console.WriteLine("\n--- Rent a Device ---\n");
+
+        var users = UserService.GetUsers();
+        Console.WriteLine("Select a user (0 to add new):");
+        foreach (var user in users)
+            Console.WriteLine($"  {user}");
+        Console.WriteLine("  0. Add new user\n");
+
+        var userChoice = Utils.ReadInt(0, users.Count);
+        if (userChoice == 0)
+        {
+            AddUser();
+            users = UserService.GetUsers();
+            userChoice = users.Count;
+        }
+        var selectedUser = users[userChoice - 1];
+
+        var devices = DeviceService.GetAvailableDevices();
+        while (devices.Count == 0)
+        {
+            Console.WriteLine("\nNo available devices. Add a new one first.");
+            AddDevice();
+            devices = DeviceService.GetAvailableDevices();
+        }
+
+        Console.WriteLine("\nSelect an available device (0 to add new):");
+        for (var i = 0; i < devices.Count; i++)
+            Console.WriteLine($"  {i + 1}. {devices[i]}");
+        Console.WriteLine("  0. Add new device\n");
+
+        var deviceChoice = Utils.ReadInt(0, devices.Count);
+        if (deviceChoice == 0)
+        {
+            AddDevice();
+            devices = DeviceService.GetAvailableDevices();
+            Console.WriteLine("\nSelect an available device:");
+            for (var i = 0; i < devices.Count; i++)
+                Console.WriteLine($"  {i + 1}. {devices[i]}");
+            Console.WriteLine();
+            deviceChoice = Utils.ReadInt(1, devices.Count);
+        }
+        var selectedDevice = devices[deviceChoice - 1];
+
+        Console.WriteLine("\nEnter rental date (yyyy-MM-dd) or press Enter for today:");
+        var dateInput = Console.ReadLine()!.Trim();
+        var rentalDate = string.IsNullOrEmpty(dateInput) ? DateTime.Today : DateTime.Parse(dateInput);
+
+        Console.WriteLine("Enter rental length in days:");
+        var rentalLength = Utils.ReadInt(min: 1);
+
+        RentalService.CreateRental(selectedUser.Id, selectedDevice.Id, rentalDate, rentalLength);
+        Console.WriteLine($"\nDevice '{selectedDevice.Name}' rented to {selectedUser.FirstName} {selectedUser.LastName} for {rentalLength} days.\n");
+    }
 }

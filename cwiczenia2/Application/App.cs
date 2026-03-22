@@ -43,7 +43,10 @@ public class App
                     case 4:
                         AppActions.ShowAvailableDevices();
                         break;
-                    // TODO: handle actions 5-10
+                    case 5:
+                        AppActions.RentDevice();
+                        break;
+                    // TODO: handle actions 6-10
                 }
 
                 ShowAvailableActions();

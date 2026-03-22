@@ -8,4 +8,9 @@ public static class UserService
     {
         new User(firstName, lastName, userType);
     }
+
+    public static IReadOnlyList<User> GetUsers()
+    {
+        return User.Users;
+    }
 }
