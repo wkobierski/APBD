@@ -39,7 +39,7 @@ public static class RentalService
     public static List<Rental> GetExpiredRentals()
     {
         return Rental.Rentals
-            .Where(r => r.ReturnedInTime == null && (DateTime.Today - r.RentalDate).Days > Constants.RentalFreePeriodDays)
+            .Where(r => r.ReturnedInTime == null && (DateTime.Today - r.RentalDate).Days > r.RentalLengthInDays)
             .ToList();
     }
 
@@ -60,7 +60,7 @@ public static class RentalService
         var user = User.Users.First(u => u.Id == rental.UserId);
 
         var totalDays = (DateTime.Today - rental.RentalDate).Days;
-        var lateDays = Math.Max(0, totalDays - Constants.RentalFreePeriodDays);
+        var lateDays = Math.Max(0, totalDays - rental.RentalLengthInDays);
         var fee = lateDays * Constants.LateFeePerDayPln;
 
         rental.ReturnedInTime = lateDays == 0;
