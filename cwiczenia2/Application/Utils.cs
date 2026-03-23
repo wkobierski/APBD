@@ -58,7 +58,7 @@ public static class Utils
             Console.WriteLine($"{i + 1}. {values[i]}");
     }
 
-    public static void DisplayList<T>(string title, IList<T> items, string emptyMessage)
+    public static void DisplayList<T>(string title, IReadOnlyList<T> items, string emptyMessage)
     {
         Console.WriteLine($"\n--- {title} ---\n");
 
