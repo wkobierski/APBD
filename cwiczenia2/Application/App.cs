@@ -58,6 +58,7 @@ public class App
                 ShowAvailableActions();
         }
         
+        DataStore.SaveData();
         SayGoodbye();
     }
 
@@ -70,7 +71,6 @@ public class App
     
     private static void SayGoodbye()
     {
-        DataStore.SaveData();
         Console.WriteLine("\nThanks for using the Rental App. Goodbye!\n");
     }
 
