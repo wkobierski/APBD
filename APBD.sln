@@ -6,7 +6,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cwiczenia2", "cwiczenia2\cw
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cwiczenia3", "cwiczenia3\cwiczenia3.csproj", "{C778DCCA-7E27-4A8C-BA6A-94FFB88A8FE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cwiczenia5", "cwiczenia5\cwiczenia5.csproj", "{1E8B7558-8081-4B9F-8CFD-DBC81960EC9E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cwiczeniaa4", "cwiczeniaa4\cwiczeniaa4.csproj", "{1E8B7558-8081-4B9F-8CFD-DBC81960EC9E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
